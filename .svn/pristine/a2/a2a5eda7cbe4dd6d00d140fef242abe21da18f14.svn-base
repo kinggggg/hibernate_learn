@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.many2many">
+		<class name="Teacher" table="teas">
+			<id name="id" column="id" type="integer">
+				<generator class="native"></generator>
+			</id>
+			<property name="teano" column="teano" type="string" length="20" />
+			
+			<!-- 多对多关联,两侧都是一对多关系,但是一定要将某一端的inverse打开,使其失去关联关系的控制权,否则会起冲突 -->
+			<set name="stus" table="links" inverse="true">
+				<key column="tid" />
+				<many-to-many class="Student" column="sid" />
+			</set>
+		</class>
+	</hibernate-mapping>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.one2one.fk">
+		<class name="Addr" table="addrfks" entity-name="addrFK">
+			<id name="id" column="id" type="integer">
+				<generator class="native"></generator>
+			</id>
+			<property name="province" column="province" type="string" length="20" />
+			<property name="city" column="city" type="string" length="20" />
+			
+			<!--注意，虽然此时一对一关联之外键关联方式是多对一关联关系的一种特例，但是此时在这一端使用的映射元素是
+				<one-to-one>，这一点是与真正的多对一关联关系（在多的一端，即Order端，使用的是<many-to-one>，在一的一端，即，Customer端，使用的是
+				set集合）使用的不同的 
+			属性参考 -->
+			<one-to-one name="user" property-ref="addr" entity-name="userFK"></one-to-one>
+		</class>
+	</hibernate-mapping>

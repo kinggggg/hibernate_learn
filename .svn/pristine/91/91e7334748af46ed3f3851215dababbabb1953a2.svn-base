@@ -1,0 +1,119 @@
+package com.zeek.hibernate.test;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.zeek.hibernate.domain.many2many.Student;
+import com.zeek.hibernate.domain.many2many.Teacher;
+import com.zeek.hibernate.domain.one2one.fk.Addr;
+import com.zeek.hibernate.domain.one2one.fk.User;
+
+/**
+ * 测试多对多关联关系
+ * @author zeek
+ *
+ */
+public class TestMany2Many {
+
+	private static SessionFactory sf = null;
+	
+	@BeforeClass
+	public static void buildSf(){
+		Configuration conf = new Configuration();
+		conf.addClass(Student.class);
+		conf.addClass(Teacher.class);
+		sf = conf.buildSessionFactory();
+	}
+	
+	@AfterClass
+	public static void release(){
+		sf.close();
+	}
+	
+	@Test
+	public void insert(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		Teacher t1 = new Teacher();
+		Teacher t2 = new Teacher();
+		
+		Student s1 = new Student();
+		Student s2 = new Student();
+		Student s3 = new Student();
+		Student s4 = new Student();
+		
+		//注释了这里也是可以保存成功的
+		/*t1.addStudents(s1, s2, s3);
+		t2.addStudents(s2, s3, s4);*/
+		
+		s1.addTeachers(t1);
+		s2.addTeachers(t1, t2);
+		s3.addTeachers(t1, t2);
+		s4.addTeachers(t2);
+		
+		
+		s.save(t1);
+		s.save(t2);
+		s.save(s1);
+		s.save(s2);
+		s.save(s3);
+		s.save(s4);
+		
+		transaction.commit();
+		s.close();
+	}
+	
+	/**
+	 * 改变关联关系
+	 */
+	@Test
+	public void modifyRela(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Teacher t1 = (Teacher) s.load(Teacher.class, 1);
+		Teacher t2 = (Teacher) s.load(Teacher.class, 2);
+		
+		Student s1 = (Student) s.load(Student.class, 1);
+		
+		s1.getTeas().remove(t1);
+		s1.getTeas().add(t2);
+		
+		//由于是由Student端的teas维护关系，因此下面的两行可以不写
+		/*t1.getStus().remove(s1);
+		t2.getStus().add(s1);*/
+		
+		transaction.commit();
+		s.close();
+	}
+	
+	/**
+	 * 删除关系
+	 */
+	@Test
+	public void deleteRela1(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Teacher t2 = (Teacher) s.load(Teacher.class, 2);
+		
+		Student s1 = (Student) s.load(Student.class, 1);
+		
+		//由于是由Student端的teas维护关系，因此虽然执行下面注释的两个不报告错误，但是无法删除关联关系
+		/*t2.getStus().remove(s1);
+		s.save(t2);*/
+		
+		//通过下面的两行可以删除相应的关联关系
+		s1.getTeas().remove(t2);
+		s.save(s1);
+		
+		transaction.commit();
+		s.close();
+	}
+	
+}

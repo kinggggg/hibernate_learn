@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.inherit.joined">
+		<class name="Employee" table="ess_joined" entity-name="eeJoined">
+			<id name="id" column="id" type="integer">
+				<generator class="increment"></generator>
+			</id>
+			<property name="name" column="name" type="string" length="20"></property>
+			<property name="age" column="age" type="integer" length="5"></property>
+			<!-- 连接子类-每个类对应一张表 -->
+			<joined-subclass name="HourEmployee" table="hes_joined" entity-name="heJoined">
+			     <key column="eid"></key>
+			     <property name="rate" column="rate" type="float"></property>
+			</joined-subclass>
+			<joined-subclass name="SalaryEmployee" table="ses_joined" entity-name="seJoined">
+                 <key column="eid"></key>
+                 <property name="salary" column="salary" type="float"></property>
+            </joined-subclass>
+		</class>
+	</hibernate-mapping>

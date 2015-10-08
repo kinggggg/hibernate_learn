@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.one2one.fk">
+		<class name="User" table="userfks">
+			<id name="id" column="id" type="integer">
+				<generator class="native"></generator>
+			</id>
+			<property name="name" column="name" type="string" length="20"></property>
+			
+			<!-- 通过多对一，模拟出一对一关联，增加唯一性约束 -->
+			<many-to-one name="addr" column="addrid" class="Addr" unique="true" cascade="all">
+			</many-to-one>
+		</class>
+	</hibernate-mapping>

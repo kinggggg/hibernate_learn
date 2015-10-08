@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain">
+		<class name="Area" table="areas">
+			<!-- 映射主键 --> 
+			<id name="id" column="id" type="integer">
+				<generator class="increment"></generator>
+			</id>
+			<property name="areaName" column="areaName" type="string" length="20"/>
+			
+			<!-- 多对一，自关联 -->
+			<many-to-one name="parentArea" class="Area" column="parentid" />
+			
+			<!-- 一对多自关联 -->
+			<set name="areas" lazy="false">
+			     <key column="parentid" />
+			     <one-to-many class="Area"/>
+			</set>
+		</class>
+		
+	</hibernate-mapping>

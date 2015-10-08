@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain">
+		<class name="Order" table="orders" lazy="false">
+			<id name="id" column="id" type="integer">
+				<generator class="identity"></generator>
+			</id>
+			<property name="orderno" type="string">
+				<column name="orderno" sql-type="varchar(20)"></column>
+			</property>
+			<property name="price" column="price" type="float"></property>
+			
+			<!-- 配置多对一关联关系映射：
+			1.若没有配置column属性的话，会使用和java对象Order中和属性名称一样的字段名称
+			2.可以使用column手动指定一个字段名称cid
+			3.这里的cascade的意思是说：当保存order对象时，对与此order对象相关联的其他的对象采取的操作方式：
+				比如说：只是调用了session的save方法对order对象进行保存，但是没有调用session的save方法对customer进行保存，此时的customer对象就是一个
+				transient类型的对象，
+					若没有设置cascade="save-update"属性，此时保存order对象的话，会出现如下的错误：
+					org.hibernate.TransientObjectException: object references an unsaved transient instance - save the transient instance before flushing: com.zeek.hibernate.domain.Customer
+					若设置了cascade="save-update"属性，此时若customer是transient类型的话，hibernate会自动对transient类型的对象进行持久化操作，保存到数据库
+					-->
+			<many-to-one name="customer" class="Customer" column="cid"></many-to-one>
+		</class>
+	</hibernate-mapping>

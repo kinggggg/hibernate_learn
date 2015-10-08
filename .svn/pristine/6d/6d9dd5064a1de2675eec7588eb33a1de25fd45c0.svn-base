@@ -1,0 +1,15 @@
+package com.zeek.hibernate.domain.inherit.single;
+
+public class SalaryEmployee extends Employee {
+
+	private float salary;
+
+	public float getSalary() {
+		return salary;
+	}
+
+	public void setSalary(float salary) {
+		this.salary = salary;
+	}
+	
+}

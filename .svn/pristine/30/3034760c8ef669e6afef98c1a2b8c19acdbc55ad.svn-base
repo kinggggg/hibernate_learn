@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.inherit.single">
+		<class name="Employee" table="ess_single" discriminator-value="ee">
+			<id name="id" column="id" type="integer">
+				<generator class="increment"></generator>
+			</id>
+			<!-- 区分字段 -->
+			<discriminator column="etype" type="string" length="2"/>
+			<property name="name" column="name" type="string" length="20"></property>
+			<property name="age" column="age" type="integer" length="5"></property>
+			<!-- 子类 -->
+			<subclass name="HourEmployee" discriminator-value="he">
+                <property name="rate" column="rate" type="float"></property>
+			</subclass>
+			<!-- 子类 -->
+			<subclass name="SalaryEmployee" discriminator-value="se">
+			     <property name="salary" column="salary" type="float"></property>
+			</subclass>
+		</class>
+	</hibernate-mapping>

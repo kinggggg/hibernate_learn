@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.inherit.union">
+		<class name="Employee" table="ess_union">
+			<id name="id" column="id" type="integer">
+				<generator class="hilo">
+				    <param name="table">hilos</param>
+				    <param name="column">current_id</param>
+				    <param name="max_lo">10</param>
+				</generator>
+			</id>
+			<property name="name" column="name" type="string" length="20"></property>
+			<property name="age" column="age" type="integer" length="5"></property>
+			<!-- 连接子类-每个类对应一张表 -->
+			<union-subclass name="HourEmployee" table="hes_union">
+			     <property name="rate" column="rate" type="float"></property>
+			</union-subclass>
+			<union-subclass name="SalaryEmployee" table="ses_union">
+                 <property name="salary" column="salary" type="float"></property>
+            </union-subclass>
+            <!-- 结论：
+                此时在ee_union, hes_union和ses_union中id的值都是不相同的；并且如果此时使用hql语法from Employee
+                查询所有的员工的话，此时生成的sql使用的时union查询语句，如下的形式
+                select c.id cid, c.name cname form customer union select o.id oid, o.price oprice from order
+             -->
+		</class>
+	</hibernate-mapping>
