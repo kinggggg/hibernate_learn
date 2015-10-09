@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain">
+		<class name="Customer" table="customers">
+			<!-- 映射主键 --> 
+			<id name="id" column="id" type="integer">
+				<generator class="increment"></generator>
+			</id>
+			<!-- 映射普通属性 
+				type的值既不是java中的类型，也不是mysql数据库中的类型，
+				而是hibernate为了让java中的类型和数据库中的类型所做的对应关系的一个桥梁类型
+			-->
+			<property name="name" column="name" type="string" access="property"></property>
+			<property name="age" column="age" type="integer"></property>
+			<property name="birthday" column="birthday" type="date"></property>
+			<property name="married" column="married" type="boolean"></property>
+			<property name="photo" column="photo" type="binary"></property>
+			<property name="description" column="description" type="text"></property>
+		</class>
+	</hibernate-mapping>
