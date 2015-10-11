@@ -91,4 +91,18 @@ public class TestCRUD {
 		session.close();
 	}
 	
+	/**
+	 */
+	@Test
+	public void updateCustomer2(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer c = new Customer();
+		c.setId(3);
+		c.setName("jerry");
+		session.update(c);
+		tx.commit();
+		session.close();
+	}
+	
 }
