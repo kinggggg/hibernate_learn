@@ -61,5 +61,18 @@ public class TestCRUD {
 		tx.commit();
 		session.close();
 	}
+	/**
+	 * 根据id查询客户
+	 * @throws Exception
+	 */
+	@Test
+	public void findCustomerById() throws Exception{
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer c = (Customer) session.load(Customer.class, 1);
+		System.out.println(c.getName());
+		tx.commit();
+		session.close();
+	}
 	
 }
