@@ -72,8 +72,21 @@ public class TestCRUD {
 		Customer c = (Customer) session.load(Customer.class, 3);
 		System.out.println(c.getName());
 		byte[] photo = c.getPhoto();
-		FileOutputStream fos = new FileOutputStream("/Users/weibo_li/Downloads/write.jpg");
+		FileOutputStream fos = new FileOutputStream("/Users/weibo_li/Downloads/write.png");
 		fos.write(photo);
+		fos.close();
+		tx.commit();
+		session.close();
+	}
+	
+	/**
+	 */
+	@Test
+	public void updateCustomer(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer c = (Customer) session.load(Customer.class, 3);
+		c.setName("jerry");
 		tx.commit();
 		session.close();
 	}
