@@ -69,8 +69,11 @@ public class TestCRUD {
 	public void findCustomerById() throws Exception{
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		Customer c = (Customer) session.load(Customer.class, 1);
+		Customer c = (Customer) session.load(Customer.class, 3);
 		System.out.println(c.getName());
+		byte[] photo = c.getPhoto();
+		FileOutputStream fos = new FileOutputStream("/Users/weibo_li/Downloads/write.jpg");
+		fos.write(photo);
 		tx.commit();
 		session.close();
 	}
