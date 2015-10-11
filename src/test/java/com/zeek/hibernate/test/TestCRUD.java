@@ -105,4 +105,46 @@ public class TestCRUD {
 		session.close();
 	}
 	
+	/**
+	 * 查询所有客户
+	 */
+	@Test
+	public void findAllCustomer(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		//hql: hibernate query language. 当中的Customer是类名，不是表名
+		String hql = "from Customer" ;
+		Query query = session.createQuery(hql);
+		List<Customer> list = query.list();
+		for(Customer c : list){
+			System.out.println(c.getName());
+		}
+	}
+	
+	/**
+	 * 根据id删除客户
+	 */
+	@Test
+	public void testDelete(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer c = (Customer) session.load(Customer.class, 2);
+		session.delete(c);
+		tx.commit();
+		session.close();
+	}
+	
+	/**
+	 * 批量删除客户
+	 */
+	@Test
+	public void testDeleteBatch(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "delete from Customer c where c.name like 't%'" ;
+		Query query = session.createQuery(hql);
+		query.executeUpdate();
+		tx.commit();
+		session.close();
+	}
 }
