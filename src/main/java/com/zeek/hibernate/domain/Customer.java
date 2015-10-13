@@ -78,6 +78,11 @@ public class Customer {
 		this.photo = photo;
 	}
 
+	/**
+	 * 将访问修饰符public修改为private后，再运行TestAccess中的测试用例时，程序运行完全正常，这是因为:
+	 * hibernate访问实体中标准的javabean方式用的反射，不受访问控制符的限制
+	 * @return
+	 */
 	public String getName() {
 		if((fname!=null && !fname.equals("")) && (lname!=null && !lname.equals(""))){
 			return fname + "," + lname;
@@ -85,6 +90,7 @@ public class Customer {
 		return null;
 	}
 
+	//同上
 	public void setName(String name) {
 		if(name!=null){
 			String[] split = name.split(",");
