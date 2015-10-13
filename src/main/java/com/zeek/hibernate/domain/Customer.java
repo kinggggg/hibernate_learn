@@ -6,7 +6,7 @@ public class Customer {
 
 	private Integer id;
 
-	private String name;
+//	private String name;
 
 	private Integer age;
 
@@ -17,6 +17,26 @@ public class Customer {
 	private byte[] photo;
 
 	private String description;
+	
+	private String fname;
+	
+	private String lname;
+
+	public String getFname() {
+		return fname;
+	}
+
+	public void setFname(String fname) {
+		this.fname = fname;
+	}
+
+	public String getLname() {
+		return lname;
+	}
+
+	public void setLname(String lname) {
+		this.lname = lname;
+	}
 
 	public Integer getId() {
 		return id;
@@ -59,11 +79,20 @@ public class Customer {
 	}
 
 	public String getName() {
-		return name;
+		if((fname!=null && !fname.equals("")) && (lname!=null && !lname.equals(""))){
+			return fname + "," + lname;
+		}
+		return null;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		if(name!=null){
+			String[] split = name.split(",");
+			if(split != null && split.length > 1){
+				this.fname = split[0];
+				this.lname = split[1];
+			}
+		}
 	}
 
 	public String getDescription() {
