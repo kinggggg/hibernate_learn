@@ -60,4 +60,14 @@ public class TestAccess {
 		tx.commit();
 		session.close();
 	}
+	
+	@Test
+	public void findByName(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Query query = session.createQuery("from Customer c where c.name like 't%'");
+		List<Customer> list = query.list();
+		tx.commit();
+		session.close();
+	}
 }
