@@ -10,9 +10,10 @@
 			</id>
 			<!-- 映射普通属性 
 				type的值既不是java中的类型，也不是mysql数据库中的类型，
-				而是hibernate为了让java中的类型和数据库中的类型所做的对应关系的一个桥梁类型
+				而是hibernate为了让java中的类型和数据库中的类型所做的对应关系的一个桥梁类型。
+				property元素的insert和update属性的值表明这个字段是否可以别插入或者被更新（true时允许，false时不允许。默认均为true）
 			-->
-			<property name="name" column="name" type="string" access="property"></property>
+			<property name="name" column="name" type="string" access="property" insert="true"></property>
 			<property name="age" column="age" type="integer"></property>
 			<property name="birthday" column="birthday" type="date"></property>
 			<property name="married" column="married" type="boolean"></property>
