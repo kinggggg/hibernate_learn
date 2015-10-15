@@ -13,11 +13,18 @@
 				而是hibernate为了让java中的类型和数据库中的类型所做的对应关系的一个桥梁类型。
 				property元素的insert和update属性的值表明这个字段是否可以别插入或者被更新（true时允许，false时不允许。默认均为true）
 			-->
-			<property name="name" column="name" type="string" access="property" insert="true"></property>
+			<property name="name" type="string" access="property" insert="true">
+			     <column name="name" length="20"></column>
+			</property>
 			<property name="age" column="age" type="integer"></property>
 			<property name="birthday" column="birthday" type="date"></property>
 			<property name="married" column="married" type="boolean"></property>
-			<property name="photo" column="photo" type="binary"></property>
+			<!-- 若让hibernate通过这个配置自动创建数据库表的话，hibernate会自动按照这里配置的映射类型也即type=“binary”的值按照默认的方式设置生成的
+			数据库表的photo字段的数据类型，这里设置为tinyblob；但是有时候这个字段的这种类型并不是我们所希望的数据类型；此时就可以设置property元素的子元素
+			column元素来指定精确的数据库字段类型;column子元素不能与property元素的column属性共存 -->
+			<property name="photo" type="binary">
+			     <column name="photo" sql-type="blob"></column>
+			</property>
 			<property name="description" column="description" type="text"></property>
 		</class>
 	</hibernate-mapping>
