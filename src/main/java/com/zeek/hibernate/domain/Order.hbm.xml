@@ -13,6 +13,6 @@
 			<property name="price" column="price" type="float"></property>
 			
 			<!-- 配置多对一关联关系 -->
-			<many-to-one name="customer" class="Customer" column="cid"></many-to-one>
+			<many-to-one name="customer" class="Customer" column="cid" cascade="save-update"></many-to-one>
 		</class>
 	</hibernate-mapping>
