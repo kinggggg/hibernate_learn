@@ -1,6 +1,8 @@
 package com.zeek.hibernate.domain;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Customer {
 
@@ -21,6 +23,17 @@ public class Customer {
 	private String fname;
 	
 	private String lname;
+	
+	//配置一对多关联映射关系,并初始化orders，防止出现空指针异常
+	private Set<Order> orders = new HashSet<Order>();
+
+	public Set<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Set<Order> orders) {
+		this.orders = orders;
+	}
 
 	public String getFname() {
 		return fname;

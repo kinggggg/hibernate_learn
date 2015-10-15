@@ -91,4 +91,22 @@ public class TestMany2One {
 		session.close();
 	}
 	
+	/**
+	 * 测试多对一关联关系，插入
+	 */
+	@Test
+	public void testInsert2(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = new Customer();
+		Order order = new Order();
+		customer.getOrders().add(order);
+		order.setCustomer(customer);
+		session.save(order);
+		session.save(customer);
+		
+		tx.commit();
+		session.close();
+	}
+	
 }
