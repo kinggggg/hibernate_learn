@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain">
+		<class name="Order" table="orders">
+			<id name="id" column="id" type="integer">
+				<generator class="identity"></generator>
+			</id>
+			<property name="orderno" type="string">
+				<column name="orderno" sql-type="varchar(20)"></column>
+			</property>
+			<property name="price" column="price" type="float"></property>
+			
+			<!-- 配置多对一关联关系 -->
+			<many-to-one name="customer" class="Customer" column="cid"></many-to-one>
+		</class>
+	</hibernate-mapping>
