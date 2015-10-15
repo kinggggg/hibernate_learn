@@ -75,4 +75,19 @@ public class TestMany2One {
 		session.close();
 	}
 	
+	/**
+	 * 测试多对一关联关系，查询
+	 * 配置好关联关系后，查询订单时，hibernate自动把与此订单相关联的用户信息查询出来
+	 */
+	@Test
+	public void testLoadOrder(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Order order = (Order) session.load(Order.class, 2);
+		System.out.println(order.getId());
+		System.out.println(order.getCustomer().getId());
+		tx.commit();
+		session.close();
+	}
+	
 }
