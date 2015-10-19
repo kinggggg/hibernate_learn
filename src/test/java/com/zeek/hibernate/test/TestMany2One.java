@@ -218,14 +218,25 @@ public class TestMany2One {
 		Customer customer = (Customer) session.load(Customer.class, 1);
 		Order order = (Order) session.load(Order.class, 9);
 		//由于在一端Customer端已经配置inverter=true，若要删除两者之间的关系的话，可以通过order.setCustomer(null);来删除关系
-		//当然也可执行两个语句，只不过，执行customer.getOrders().remove(order);时没有什么影响
+		//，只不过，执行customer.getOrders().remove(order);时没有什么影响
 		//order.setCustomer(null);
 		customer.getOrders().remove(order);
 		tx.commit();
 		session.close();
 	}
 	
-	
+	/**
+	 * 级联删除
+	 */
+	@Test
+	public void testDeleteCustomer(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = (Customer) session.load(Customer.class, 1);
+		session.delete(customer);
+		tx.commit();
+		session.close();
+	}
 	
 	
 }
