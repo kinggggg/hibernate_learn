@@ -188,11 +188,11 @@ public class TestMany2One {
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
 		Customer customer = (Customer) session.load(Customer.class, 1);
-		Order order = (Order) session.load(Order.class, 9);
+		Order order = (Order) session.load(Order.class, 10);
 		customer.getOrders().add(order);
 		order.setCustomer(customer);
-		//在一的一端Customer端没有配置inverter=true之前，若要改变关系的话，只要执行下面两个改变关系的语句当中的任意一个即可（当然也可以全部执行，只是对同样的外键
-		//会更新两次，这样的话就会降低效率）
+		//在一的一端Customer端没有配置inverter=true后，表明hibernate不再监控customer对象中orders集合的变化，只监控order对象中customer属性的变化：也即此时
+		//关系的维护由order端负责，此时hibernate只执行一次更新，性能提升
 		tx.commit();
 		session.close();
 	}
