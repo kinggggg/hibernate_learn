@@ -108,5 +108,23 @@ public class TestMany2One {
 		tx.commit();
 		session.close();
 	}
+	/**
+	 * 测试多对一关联关系，插入
+	 * 在set元素上也可以采取级联操作
+	 */
+	@Test
+	public void testInsert3(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = new Customer();
+		Order order = new Order();
+		customer.getOrders().add(order);
+		order.setCustomer(customer);
+		session.save(customer);
+		//session.save(order);
+		
+		tx.commit();
+		session.close();
+	}
 	
 }
