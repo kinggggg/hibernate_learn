@@ -232,8 +232,11 @@ public class TestMany2One {
 	public void testDeleteCustomer(){
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		Customer customer = (Customer) session.load(Customer.class, 1);
-		session.delete(customer);
+		Customer customer = (Customer) session.load(Customer.class, 2);
+		Order order = (Order) session.load(Order.class, 11);
+		customer.getOrders().remove(order);
+		order.setCustomer(null);
+		//在customer的配置文件中的set中配置cascade=all-delete-orphan后，当解除关联关系时,对应的不是将cid设置成null,而是删除订单记录
 		tx.commit();
 		session.close();
 	}
