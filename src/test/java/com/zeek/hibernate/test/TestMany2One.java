@@ -180,6 +180,22 @@ public class TestMany2One {
 		session.close();
 	}
 	
+	/**
+	 * 测试改变关联关系
+	 */
+	@Test
+	public void testChangeRela(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = (Customer) session.load(Customer.class, 1);
+		Order order = (Order) session.load(Order.class, 9);
+		customer.getOrders().add(order);
+		order.setCustomer(customer);
+		//在一的一端Customer端没有配置inverter=true之前，若要改变关系的话，只要执行下面两个改变关系的语句当中的任意一个即可（当然也可以全部执行，只是对同样的外键
+		//会更新两次，这样的话就会降低效率）
+		tx.commit();
+		session.close();
+	}
 	
 	
 	
