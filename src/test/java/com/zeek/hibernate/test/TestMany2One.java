@@ -197,7 +197,18 @@ public class TestMany2One {
 		session.close();
 	}
 	
-	
+	@Test
+	public void testChangeRela2(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = (Customer) session.load(Customer.class, 1);
+		Order order = (Order) session.load(Order.class, 10);
+		//由于在一的一端Customer端配置了inverter="true"因此改变关系的话，只能通过order.setCustomer(customer);代码来改变关系
+		order.setCustomer(customer);
+		//customer.getOrders().add(order);//这行代码不能改变关联关系
+		tx.commit();
+		session.close();
+	}
 	
 	
 }
