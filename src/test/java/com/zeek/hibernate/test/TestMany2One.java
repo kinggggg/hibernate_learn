@@ -142,5 +142,46 @@ public class TestMany2One {
 		session.close();
 	}
 	
+	/**
+	 * 测试cascade属性
+	 */
+	@Test
+	public void testCascade(){
+		Session session = sf.openSession();
+		Transaction tx = session.beginTransaction();
+		Customer customer = new Customer();
+		Order order1 = new Order();
+		Order order2 = new Order();
+		Order order3 = new Order();
+		
+		order1.setCustomer(customer);
+		customer.getOrders().add(order2);
+		customer.getOrders().add(order3);
+		//前提：在两端均配置了级联cascade
+		
+		//数据库一共保存4条记录：当save order1时，由于customer与order1相关联，故也save customer；当save customer时，由于order2月order3与之相关联，故也save 
+		//order2和order3
+		/*Hibernate: insert into customers (name, age, birthday, married, photo, description, id) values (?, ?, ?, ?, ?, ?, ?)
+		Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)
+		Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)
+		Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)*/
+		//session.save(order1);
+		
+		//数据库一共保存3条记录
+		/*Hibernate: insert into customers (name, age, birthday, married, photo, description, id) values (?, ?, ?, ?, ?, ?, ?)
+		Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)
+		Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)*/
+		//session.save(customer);
+		
+		//保存一条记录
+		//Hibernate: insert into orders (orderno, price, cid) values (?, ?, ?)
+		session.save(order2);
+		tx.commit();
+		session.close();
+	}
+	
+	
+	
+	
 	
 }
