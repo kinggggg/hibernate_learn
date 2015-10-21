@@ -63,4 +63,19 @@ public class TestFlushMode {
 		session.close();
 	}
 	
+	/**
+	 * 清理模式受到主键生成策略的限制：当主键生成策略为identity（即，依赖数据库本省递增）时，清理缓存是不受缓存清理模式影响的：只要执行save方法马上插入数据
+	 */
+	@Test
+	public void testNever3(){ 
+		Session session = sf.openSession();
+		session.setFlushMode(FlushMode.NEVER);
+		Transaction tx = session.beginTransaction();
+		Order o = new Order();
+		session.save(o);
+		session.flush();
+		tx.commit();
+		session.close();
+	}
+	
 }
