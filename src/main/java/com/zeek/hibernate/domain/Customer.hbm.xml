@@ -32,5 +32,21 @@
 			     <key column="cid" />
 			     <one-to-many class="Order"/>
 			</set>
+			
+			<!-- 映射组成关系 -->
+            <component name="homeAddress" class="Address">
+                <parent name="customer"/>
+                <property name="province" column="home_province" type="string"/>
+                <property name="city" column="home_city" type="string"/>
+                <property name="street" column="home_street" type="string"/>
+                <property name="zipcode" column="home_zipcode" type="string"/>
+            </component>
+            <component name="comAddress" class="Address">
+                <parent name="customer"/>
+                <property name="province" column="com_province" type="string"/>
+                <property name="city" column="com_city" type="string"/>
+                <property name="street" column="com_street" type="string"/>
+                <property name="zipcode" column="com_zipcode" type="string"/>
+            </component>
 		</class>
 	</hibernate-mapping>

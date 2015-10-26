@@ -26,6 +26,26 @@ public class Customer {
 	
 	//配置一对多关联映射关系,并初始化orders，防止出现空指针异常
 	private Set<Order> orders = new HashSet<Order>();
+	
+	//配置组成关系属性
+	private Address homeAddress = new Address();
+	private Address comAddress = new Address();
+
+	public Address getHomeAddress() {
+		return homeAddress;
+	}
+
+	public void setHomeAddress(Address homeAddress) {
+		this.homeAddress = homeAddress;
+	}
+
+	public Address getComAddress() {
+		return comAddress;
+	}
+
+	public void setComAddress(Address comAddress) {
+		this.comAddress = comAddress;
+	}
 
 	public Set<Order> getOrders() {
 		return orders;

@@ -82,9 +82,9 @@ public class TestFlushMode {
 	public void testPersit(){ 
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		Customer c = (Customer) session.load(Customer.class, 2);
+		Customer c = (Customer) session.load(Customer.class, 3);
 		c.setAge(33);
-		session.evict(c);
+		//session.evict(c);
 		session.update(c);
 		tx.commit();
 		session.close();
