@@ -35,6 +35,7 @@
 			
 			<!-- 映射组成关系 -->
             <component name="homeAddress" class="Address">
+                <!-- 如要在Address类型的属性对象中需要访问对应的Customer对象的话，需要配置parent这个属性 -->
                 <parent name="customer"/>
                 <property name="province" column="home_province" type="string"/>
                 <property name="city" column="home_city" type="string"/>
