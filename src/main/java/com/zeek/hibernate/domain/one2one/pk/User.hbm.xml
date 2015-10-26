@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+	<hibernate-mapping package="com.zeek.hibernate.domain.one2one.pk">
+		<class name="User" table="userpks">
+			<id name="id" column="id" type="integer">
+				<generator class="native"></generator>
+			</id>
+			<property name="name" column="name" type="string" length="20"></property>
+			
+			<!-- 映射一对一关联关系 -->
+			<one-to-one name="addr" class="Addr"/>
+		</class>
+	</hibernate-mapping>
