@@ -65,10 +65,12 @@ public class TestComponent {
 	public void testLoad(){
 		Session session = sf.openSession();
 		Transaction tx = session.beginTransaction();
-		Customer c = (Customer) session.load(Customer.class, 3);
+		Customer c = (Customer) session.load(Customer.class, 5);
 		Address com = c.getComAddress();
-		//若与Customer中comAddress对应的数据库字段的值全部为null的话，此时得到的comAddress属性值就为null！虽然在Customer中定义comAddress属性已经new出了一个对象，但是
-		//此时还是为null
+		/**
+		 * 若与Customer中comAddress对应的数据库字段的值全部为null的话，此时得到的comAddress属性值就为null！
+		 * 虽然在Customer中定义comAddress属性已经new出了一个对象，但是此时还是为null
+		 */
 		if(com == null){
 			com = new Address();
 			//仅仅是重新new出一个Address对象是不行的，因为此时新new出的这个对象没有和c对象进行关联，因此还需要执行下面的一行代码
