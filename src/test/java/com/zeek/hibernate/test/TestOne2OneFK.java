@@ -49,4 +49,22 @@ public class TestOne2OneFK {
 		s.close();
 	}
 	
+	@Test
+	/**
+	 * 经测试发现，不能插入一个新的用户，错误信息说：Duplicate entry '1' for key 'UK_26smr7war5jdkafu5ik7iwr9e'
+	 * 证明在user表的addrid字段加的唯一性约束起到了作用
+	 */
+	public void realOne2One(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		Addr a = (Addr) s.load(Addr.class, 1);
+		User u = new User();
+		
+		u.setAddr(a);
+		a.setUser(u);
+		s.save(u);
+		
+		transaction.commit();
+		s.close();
+	}
 }
