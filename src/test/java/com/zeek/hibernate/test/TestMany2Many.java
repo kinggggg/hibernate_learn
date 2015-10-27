@@ -68,4 +68,30 @@ public class TestMany2Many {
 		s.close();
 	}
 	
+	/**
+	 * 改变关联关系
+	 * 对于多对多的关联关系，links表，hibernate只能删除，增加这个表的记录，而不能改变某条记录的信息。
+	 * 改变关联关系时，hibernate首先将旧的关联关系删除，然后再建立新的关联关系
+	 */
+	@Test
+	public void modifyRela(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Teacher t1 = (Teacher) s.load(Teacher.class, 1);
+		Teacher t2 = (Teacher) s.load(Teacher.class, 2);
+		
+		Student s1 = (Student) s.load(Student.class, 4);
+		
+		s1.getTeas().remove(t2);
+		s1.getTeas().add(t1);
+		
+		//由于是由Student端的teas维护关系，因此下面的两行可以不写
+		/*t1.getStus().remove(s1);
+		t2.getStus().add(s1);*/
+		
+		transaction.commit();
+		s.close();
+	}
+	
 }
