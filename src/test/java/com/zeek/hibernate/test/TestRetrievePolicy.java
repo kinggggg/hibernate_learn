@@ -177,4 +177,25 @@ public class TestRetrievePolicy {
 		s.close();
 	}
 	
+	/**
+	 * 设置set为迫切左外连接查询，这样就使用一条sql把所有的信息查询出，提高了数据库访问效率
+	 */
+	@Test
+	public void setLazyJoin(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		//无论是立即检索还是延迟检索，每一次查询的sql语句都只是查询一个表的信息，
+		//虽然立即检索和延迟检索查询的时机不一样，但毕竟每一次查询的sql语句都只是查询一个表的信息
+		//通过左外连接查询，就可以向数据库发送一条sql语句，而把所有的信息查询出来，这样就大大提高了查询的效率
+		Customer c = (Customer) s.get(Customer.class, 1);
+		Set<Order> orders = c.getOrders();
+		if(!Hibernate.isInitialized(orders)){
+			Hibernate.initialize(orders);
+		}
+		c.getOrders().size();
+		transaction.commit();
+		s.close();
+	}
+	
 }
