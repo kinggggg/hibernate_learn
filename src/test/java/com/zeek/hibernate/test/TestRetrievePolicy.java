@@ -62,4 +62,31 @@ public class TestRetrievePolicy {
 		s.close();
 	}
 	
+	/**
+	 * 测试类级别检索策略
+	 * 说明如何产生懒加载异常
+	 */
+	@Test
+	public void classLoad(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		/**
+		 * 其实此时得到的c对象的真实类型不是Customer类型的，而是Customer类型的一个代理对象。
+		 * 如果此时在hibernate的配置文件中设置这个类的类级别的检索策略为lazy=true的话，
+		 * 此时hibernate并没有对c对象（前面已经说过了其实是Customer类的一个代理对象）
+		 * 完成初始化（将有效的属性值比如说age的值设置到c对象中）工作
+		 */
+		Customer c = (Customer) s.load(Customer.class, 1);
+		
+		transaction.commit();
+		s.close();
+		/**
+		 * 这样的话，会产生 懒加载异常.当session关闭后，若此时通过c对象访问有效属性（所谓有效属性是指，必须通过查询数据库的方式才可以得到值的属性）时，
+		 * 此时这个代理对象才真正向数据库发出查询请求来查询相应的值，但是此时session已经关闭，因此会出现懒加载异常：
+	     * org.hibernate.LazyInitializationException
+		 */
+		c.getAge();
+	}
+	
 }
