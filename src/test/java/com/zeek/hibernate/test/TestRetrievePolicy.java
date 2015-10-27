@@ -124,4 +124,22 @@ public class TestRetrievePolicy {
 		c.getAge();
 	}
 	
+	/**
+	 * 测试类级别检索策略，用get方法，get不受影响（<class lazy="true">）
+	 */
+	@Test
+	public void getEntity(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		//类级别的检索策略设置不影响get方法：使用get方法时，马上查询数据库，而不管此时类级别检索策略是什么
+		Customer c = (Customer) s.get(Customer.class, 1);
+		if(!Hibernate.isInitialized(c)){
+			Hibernate.initialize(c);
+		}
+		c.getAge();
+		transaction.commit();
+		s.close();
+	}
+	
 }
