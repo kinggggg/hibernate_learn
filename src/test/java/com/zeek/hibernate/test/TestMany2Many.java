@@ -117,4 +117,25 @@ public class TestMany2Many {
 		transaction.commit();
 		s.close();
 	}
+	
+	/**
+	 * 删除关系
+	 */
+	@Test
+	public void deleteStu(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Student s2 = (Student) s.load(Student.class, 2);
+		/**
+		 * 当执行session的delete方法时，hibernate首先将s2对象从session一级缓存缓存中删除，然后再将数据库中对应的记录删除；
+		 * 可以这么想：
+		 * 		当s2从session一级缓存中删除后，s2中的teas集合肯定也相应地从一级缓存中删除了，因此此时这个集合当然也发生变化了
+		 * 		由于此时是由Student中的teas集合维护关联关系，因此此时hibernate也将links表中相应的记录删除
+		 */
+		s.delete(s2);
+		
+		transaction.commit();
+		s.close();
+	}
 }
