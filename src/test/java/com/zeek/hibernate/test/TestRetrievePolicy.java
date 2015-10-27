@@ -142,4 +142,19 @@ public class TestRetrievePolicy {
 		s.close();
 	}
 	
+	/**
+	 * 测试关联级别检索策略，set lazy=false
+	 * 
+	 */
+	@Test
+	public void setImmi(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		//此时不仅仅查询客户信息，也查询出与此客户对应的订单信息
+		Customer c = (Customer) s.get(Customer.class, 1);
+		transaction.commit();
+		s.close();
+	}
+	
 }

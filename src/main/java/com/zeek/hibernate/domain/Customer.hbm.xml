@@ -28,7 +28,7 @@
 			<property name="description" column="description" type="text"></property>
 			
 			<!-- 配置多对一关联关系 -->
-			<set name="orders" cascade="all-delete-orphan" inverse="true">
+			<set name="orders" inverse="true" lazy="false">
 			     <key column="cid" />
 			     <one-to-many class="Order"/>
 			</set>
