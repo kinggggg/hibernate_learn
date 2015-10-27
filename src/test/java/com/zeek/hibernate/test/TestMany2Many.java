@@ -94,4 +94,27 @@ public class TestMany2Many {
 		s.close();
 	}
 	
+	/**
+	 * 删除关系
+	 */
+	@Test
+	public void deleteRela1(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Teacher t1 = (Teacher) s.load(Teacher.class, 1);
+		
+		Student s1 = (Student) s.load(Student.class, 1);
+		
+		//由于是由Student端的teas维护关系，因此虽然执行下面注释的两个不报告错误，但是无法删除关联关系
+		/*t1.getStus().remove(s1);
+		s.save(t1);*/
+		
+		//通过下面的两行可以删除相应的关联关系
+		s1.getTeas().remove(t1);
+		
+		//由于更新缓存策略FlushMode默认为AUTO，因此在commit时自动刷新缓存
+		transaction.commit();
+		s.close();
+	}
 }
