@@ -138,4 +138,23 @@ public class TestMany2Many {
 		transaction.commit();
 		s.close();
 	}
+	
+	/**
+	 * 删除关系
+	 */
+	@Test
+	public void deleteTea(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		Teacher t1 = (Teacher) s.load(Teacher.class, 1);
+		/**
+		 * 由于此时是由Student中的teas集合维护关联关系，因此此时删除Teacher时，会出现异常。
+		 * 因为此时是由Student中的teas集合维护关联关系，links表中的tid为外键，而删除Teacher时，hibernate不负责删除links中相应的记录
+		 */
+		s.delete(t1);
+		
+		transaction.commit();
+		s.close();
+	}
 }
