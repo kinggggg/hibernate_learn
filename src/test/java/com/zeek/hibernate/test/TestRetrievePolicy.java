@@ -157,4 +157,24 @@ public class TestRetrievePolicy {
 		s.close();
 	}
 	
+	/**
+	 * 测试关联级别检索策略，set lazy=true
+	 * 
+	 */
+	@Test
+	public void setLazy(){
+		Session s = sf.openSession();
+		Transaction transaction = s.beginTransaction();
+		
+		//此时只是查询客户信息
+		Customer c = (Customer) s.get(Customer.class, 1);
+		Set<Order> orders = c.getOrders();//不查询order信息
+		if(!Hibernate.isInitialized(orders)){//先判断orders是否已经初始化
+			Hibernate.initialize(orders);//这个与调用c.getOrders().size()方法效果是一样的，c.getOrders().size()是访问属性的有效值，因此必须查询数据库才可以得到
+		}
+		c.getOrders().size();
+		transaction.commit();
+		s.close();
+	}
+	
 }
