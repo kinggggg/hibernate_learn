@@ -50,4 +50,9 @@
                 <property name="zipcode" column="com_zipcode" type="string"/>
             </component>
 		</class>
+		
+		<!-- 定义命名查询 -->
+        <query name="findCustomerByName">
+          <![CDATA[from Customer c where c.name = ?]]>
+        </query>
 	</hibernate-mapping>
