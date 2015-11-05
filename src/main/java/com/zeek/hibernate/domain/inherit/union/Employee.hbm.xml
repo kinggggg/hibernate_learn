@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	<hibernate-mapping package="com.zeek.hibernate.domain.inherit.union">
-		<class name="Employee" table="ess_union">
+		<class name="Employee" table="ess_union" entity-name="essUnion">
 			<id name="id" column="id" type="integer">
 				<generator class="hilo">
 				    <param name="table">hilos</param>
@@ -14,10 +14,10 @@
 			<property name="name" column="name" type="string" length="20"></property>
 			<property name="age" column="age" type="integer" length="5"></property>
 			<!-- 连接子类-每个类对应一张表 -->
-			<union-subclass name="HourEmployee" table="hes_union">
+			<union-subclass name="HourEmployee" table="hes_union" entity-name="hesUnion">
 			     <property name="rate" column="rate" type="float"></property>
 			</union-subclass>
-			<union-subclass name="SalaryEmployee" table="ses_union">
+			<union-subclass name="SalaryEmployee" table="ses_union" entity-name="sesUnion">
                  <property name="salary" column="salary" type="float"></property>
             </union-subclass>
             <!-- 结论：

@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	<hibernate-mapping package="com.zeek.hibernate.domain.inherit.single">
-		<class name="Employee" table="ess_single" discriminator-value="ee">
+		<class name="Employee" table="ess_single" discriminator-value="ee" entity-name="essSingle">
 			<id name="id" column="id" type="integer">
 				<generator class="increment"></generator>
 			</id>
@@ -12,11 +12,11 @@
 			<property name="name" column="name" type="string" length="20"></property>
 			<property name="age" column="age" type="integer" length="5"></property>
 			<!-- 子类 -->
-			<subclass name="HourEmployee" discriminator-value="he">
+			<subclass name="HourEmployee" discriminator-value="he" entity-name="hesSingle">
                 <property name="rate" column="rate" type="float"></property>
 			</subclass>
 			<!-- 子类 -->
-			<subclass name="SalaryEmployee" discriminator-value="se">
+			<subclass name="SalaryEmployee" discriminator-value="se" entity-name="sesSingle">
 			     <property name="salary" column="salary" type="float"></property>
 			</subclass>
 		</class>

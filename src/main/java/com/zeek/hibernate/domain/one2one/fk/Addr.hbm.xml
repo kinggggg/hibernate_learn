@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	<hibernate-mapping package="com.zeek.hibernate.domain.one2one.fk">
-		<class name="Addr" table="addrfks">
+		<class name="Addr" table="addrfks" entity-name="addrFK">
 			<id name="id" column="id" type="integer">
 				<generator class="native"></generator>
 			</id>
@@ -14,6 +14,6 @@
 				<one-to-one>，这一点是与真正的多对一关联关系（在多的一端，即Order端，使用的是<many-to-one>，在一的一端，
 				即，Customer端，使用的是set集合）使用的不同的.
 			属性参考对端的一对一映射属性即可 -->
-			<one-to-one name="user" property-ref="addr"></one-to-one>
+			<one-to-one name="user" entity-name="userFK" property-ref="addr"></one-to-one>
 		</class>
 	</hibernate-mapping>

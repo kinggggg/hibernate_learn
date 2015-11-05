@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 	<hibernate-mapping package="com.zeek.hibernate.domain.one2one.pk">
-		<class name="Addr" table="addrpks">
+		<class name="Addr" table="addrpks" entity-name="addrPK">
 			<id name="id" column="id" type="integer">
 				<!-- 主键生成策略是从外部提取，从user属性提取 -->
 				<generator class="foreign">
@@ -14,6 +14,6 @@
 			<property name="city" column="city" type="string" length="20" />
 			<!-- 映射一对一关联关系.
 			constrained:收到约束的 constrained要求user属性不仅不能为null而且还必须有id -->
-			<one-to-one name="user" class="User" constrained="true"></one-to-one>
+			<one-to-one name="user" entity-name="userPK" constrained="true"></one-to-one>
 		</class>
 	</hibernate-mapping>
