@@ -31,6 +31,9 @@
          -->
         <!-- <property name="hibernate.connection.isolation">4</property> -->
         
+        <!-- 配置当前会话session类为线程，hibernate会将session和当前线程绑定 -->
+        <property name="hibernate.current_session_context_class">thread</property>
+        
         <mapping resource="com/zeek/hibernate/domain/Area.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Customer.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Order.hbm.xml"/>
