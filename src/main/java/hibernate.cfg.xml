@@ -22,6 +22,15 @@
         <property name="hibernate.c3p0.timeout">50000</property>
         <property name="hibernate.c3p0.acquire_increment">2</property>
         
+        <!-- 配置数据库的隔离级别
+        隔离级别:
+	    1.读未提交,导致脏读/不可重复读/幻读
+	    2.读已提交,避免了脏读,还能导致不可重复读/幻读(oracle)
+	    4.可以重复读,导致幻读(mysql)
+	    8.串行化,悲观锁.不支持并发.
+         -->
+        <!-- <property name="hibernate.connection.isolation">4</property> -->
+        
         <mapping resource="com/zeek/hibernate/domain/Area.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Customer.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Order.hbm.xml"/>
