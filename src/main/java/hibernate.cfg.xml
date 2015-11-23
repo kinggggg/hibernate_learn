@@ -14,6 +14,14 @@
         <property name="show_sql">true</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         
+        <!-- 配置c3p0数据源 -->
+        <!-- 配置c3p0数据源提供者，在低版本的hibernate中为了保险起见还需要配置此属性-->
+        <property name="hibernate.connection.provider_class">org.hibernate.c3p0.internal.C3P0ConnectionProvider</property>
+        <property name="hibernate.c3p0.max_size">10</property>
+        <property name="hibernate.c3p0.max_size">2</property>
+        <property name="hibernate.c3p0.timeout">50000</property>
+        <property name="hibernate.c3p0.acquire_increment">2</property>
+        
         <mapping resource="com/zeek/hibernate/domain/Area.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Customer.hbm.xml"/>
         <mapping resource="com/zeek/hibernate/domain/Order.hbm.xml"/>
